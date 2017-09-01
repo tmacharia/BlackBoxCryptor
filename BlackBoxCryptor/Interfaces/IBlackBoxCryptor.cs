@@ -8,13 +8,6 @@ namespace BlackBoxCryptor.Interfaces
     public interface IBlackBoxCryptor
     {
         /// <summary>
-        /// Initialize the black box with the set key to use in all encryptions and decryptions
-        /// thereafter
-        /// </summary>
-        /// <param name="cryptographicKey">Private key to use e.g @123456!</param>
-        /// <returns>Confirmation of whether the operation was successful</returns>
-        bool Initialize(string cryptographicKey);
-        /// <summary>
         /// Current key in use as a string
         /// </summary>
         string Key { get; }

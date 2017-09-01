@@ -7,13 +7,13 @@ using BlackBoxCryptor.ViewModels;
 
 namespace BlackBoxCryptor.Implementations
 {
-    public class BlackBoxCryptor : IBlackBoxCryptor
+    public class BlackBox : IBlackBoxCryptor
     {
         #region Local Variables
         private readonly ICryptoKeyHandler _keyHandler;
         #endregion
 
-        public BlackBoxCryptor()
+        public BlackBox()
         {
             _keyHandler = new CryptoKeyHandler();
         }
@@ -27,24 +27,6 @@ namespace BlackBoxCryptor.Implementations
             return Encoding.UTF8.GetBytes(Key);
         }
 
-        public bool Initialize(string cryptographicKey)
-        {
-            bool a = _keyHandler.Initialize();
-
-            if (!a)
-                return a;
-            else
-            {
-                //set new key
-                string keyResult = _keyHandler.SetKey(cryptographicKey);
-
-                if (!string.IsNullOrWhiteSpace(keyResult))
-                    return true;
-                else
-                    return false;
-            }
-
-        }
 
         public string Encrypt(string plainText, EncryptionScheme scheme)
         {
@@ -59,9 +41,6 @@ namespace BlackBoxCryptor.Implementations
             {
                 case EncryptionScheme.AES:
                     result = AESFunction(initialBytes, CryptorAction.Encrypt);
-                    break;
-                case EncryptionScheme.RSA:
-                    result = RSAFunction(initialBytes, CryptorAction.Encrypt);
                     break;
                 case EncryptionScheme.TripleDES:
                     result = TripleDESFunction(initialBytes, CryptorAction.Encrypt);
@@ -90,8 +69,7 @@ namespace BlackBoxCryptor.Implementations
             switch (scheme)
             {
                 case EncryptionScheme.AES:
-                    break;
-                case EncryptionScheme.RSA:
+                    result = AESFunction(initial, CryptorAction.Decrypt);
                     break;
                 case EncryptionScheme.TripleDES:
                     result = TripleDESFunction(initial, CryptorAction.Decrypt);

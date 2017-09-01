@@ -2,6 +2,7 @@
 using BlackBoxCryptor.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace BlackBoxCryptor.Implementations
@@ -15,8 +16,9 @@ namespace BlackBoxCryptor.Implementations
 
         public CryptoKeyHandler()
         {
-
+            Initialize();
         }
+      
 
         public bool Initialize()
         {
@@ -30,7 +32,7 @@ namespace BlackBoxCryptor.Implementations
             bool x = CheckInitialization();
 
             if (x)
-                return _config.GetAppSetting("cryptographic_key");
+                return GetMd5Hash(_config.GetAppSetting("cryptographic_key"));
             else
                 return x.ToString();
         }
@@ -63,6 +65,16 @@ namespace BlackBoxCryptor.Implementations
             {
                 return x.ToString();
             }
+        }
+
+        private string GetMd5Hash(string key)
+        {
+            MD5 mD5 = MD5.Create();
+
+
+            byte[] data = mD5.ComputeHash(Encoding.UTF8.GetBytes(key));
+
+            return Convert.ToBase64String(data);
         }
     }
 }

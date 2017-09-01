@@ -71,7 +71,7 @@ namespace BlackBoxCryptor.ViewModels
 
 
                 _appSettings = new List<Setting>();
-                _appSettings.Add(new Setting() { key = "cryptographic_key", value = "" });
+                _appSettings.Add(new Setting() { key = "cryptographic_key", value = "#Shannon123" });
 
 
                 AppSettings appSettings = new AppSettings()
@@ -156,10 +156,9 @@ namespace BlackBoxCryptor.ViewModels
                 //empty file
                 _configFileStream = File.OpenWrite(FILE_PATH);
 
-                using (StreamWriter writer = new StreamWriter(_configFileStream))
-                {
-                    writer.Write("",0);
-                }
+                _configFileStream.SetLength(0);
+                _configFileStream.Flush();
+                _configFileStream.Dispose();
 
                 //write file
                 AppSettings appSettings = new AppSettings();
