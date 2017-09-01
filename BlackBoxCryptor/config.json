@@ -1,0 +1,8 @@
+﻿{
+  "appSettings": [
+    {
+      "key": "cryptographic_key",
+      "value": ""
+    }
+  ]
+}
